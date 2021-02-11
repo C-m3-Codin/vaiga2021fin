@@ -32,7 +32,7 @@ class UserProvider with ChangeNotifier {
   }
 
   List<User> get getUser {
-    return [..._users];
+    // return [..._users];
   }
 
   get getSelected {
@@ -40,7 +40,7 @@ class UserProvider with ChangeNotifier {
   }
 
   void addUser(User user) {
-    _users.add(user);
+    // _users.add(user);
     notifyListeners();
   }
 
