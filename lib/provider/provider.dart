@@ -1,9 +1,35 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'userModel.dart';
 
-class userProvider with ChangeNotifier {
-  List<User> _users = [User(name: "Cyril", userID: "2018016")];
+class UserProvider with ChangeNotifier {
+  List<Nodes> _node = [Nodes(temp: "", moisture: "asd")];
   int selectedUser = 0;
+  final databaseRef = FirebaseDatabase.instance.reference();
+  String humidity = "";
+  String temperature = "";
+  int temp, humid;
+  double td, valu;
+
+  Future<String> readDate() async {
+    databaseRef.child("Humidity").once().then((DataSnapshot data) => {
+          print("${data.value}"),
+          humidity = data.value.toString(),
+          humid = int.parse(humidity)
+        });
+    databaseRef.child("Temperature").once().then((DataSnapshot data) => {
+          print("${data.value}"),
+          temperature = data.value.toString(),
+          temp = int.parse(temperature),
+          td = temp - ((100 - humid) / 100),
+          valu = 100 - (((temp - td) / temp) * 100)
+        });
+    var dat = await databaseRef.child("Humidity").once();
+    var da = dat.value;
+
+    notifyListeners();
+    // return da.toString();
+  }
 
   List<User> get getUser {
     return [..._users];
@@ -26,5 +52,13 @@ class userProvider with ChangeNotifier {
   void updateSelectedUser(int n) {
     selectedUser = n;
     notifyListeners();
+  }
+
+  Future readFromRTDBTemperature() {
+    DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
+    databaseReference.once().then((DataSnapshot datasnapshot) {
+      print(datasnapshot.value['Temperature']);
+      return datasnapshot.value['Temperature'].toString();
+    });
   }
 }

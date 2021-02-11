@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => userProvider(),
+        create: (context) => UserProvider(),
         child: MaterialApp(
           theme: ThemeData(
             visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
           home: SplashScreen(),
           routes: {
             "splash": (contxt) => SplashScreen(),
-            'home': (context) => HomePage()
+            'home': (context) => HomePage(),
+            "tab": (context) => TabBarDemo()
           },
         ));
   }
