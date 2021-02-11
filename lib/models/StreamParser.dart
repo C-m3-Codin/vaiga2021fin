@@ -3,8 +3,18 @@ class DHT {
   final double humidity;
   final double solidTEmp;
   final double smoistNow;
+  final double fan;
+  final double pump;
+  final double light;
 
-  DHT({this.temp, this.humidity, this.solidTEmp, this.smoistNow});
+  DHT(
+      {this.temp,
+      this.humidity,
+      this.solidTEmp,
+      this.smoistNow,
+      this.fan,
+      this.pump,
+      this.light});
 
   factory DHT.fromJson(Map<dynamic, dynamic> json) {
     double parser(dynamic source) {
@@ -19,6 +29,9 @@ class DHT {
         temp: parser(json['AtempNow']),
         humidity: parser(json['AhumidNow']),
         solidTEmp: parser(json['StempNow']),
-        smoistNow: parser([json['smoistNow']]));
+        smoistNow: parser(json['smoistNow']),
+        pump: parser(json['irrigation']),
+        light: parser(json['light']),
+        fan: parser(json['Fan']));
   }
 }

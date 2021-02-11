@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaiga_farmcare/firebase.dart';
 import 'package:vaiga_farmcare/models/StreamParser.dart';
+import 'package:vaiga_farmcare/models/graphModel.dart';
 import 'package:vaiga_farmcare/provider/provider.dart';
+import 'package:vaiga_farmcare/screens/Graph.dart';
 import 'package:vaiga_farmcare/screens/LatestNodes.dart';
 
 import 'NodesBar.dart';
@@ -31,7 +33,9 @@ class TabBarDemo extends StatelessWidget {
             children: [
               HomePage(),
               NodeCollectionPage(),
-              Icon(Icons.directions_bike),
+              // Icon(Icons.directions_bike),
+              ChangeNotifierProvider(
+                  create: (context) => GraphMode(), child: GraphData())
             ],
           ),
           floatingActionButton: FloatingActionButton(
@@ -63,28 +67,6 @@ class _HomePageState extends State<HomePage> {
     final prov = Provider.of<UserProvider>(context);
     final uses = prov.getUser;
     DatabaseReference _dhtref = FirebaseDatabase.instance.reference().child('');
-    // final data = prov.readFromRTDBTemperature();
-
-// StreamBuilder(
-//               stream: _dhtref.onValue,
-//               builder: (context, snapshot) {
-//                 if (snapshot.hasData &&
-//                     !snapshot.hasError &&
-//                     snapshot.data.snapshot.value != null) {
-//                   print("${snapshot.data.snapshot.value.toString()}");
-//                   var _dht =
-//                       DHT.fromJson(snapshot.data.snapshot.value['Node1']);
-//                   print(
-//                       "DHT: ${_dht.solidTEmp} / ${_dht.humidity} / ${_dht.temp}");
-//                   return Text("${_dht.solidTEmp}");
-//                 } else {
-//                   print("\n\n\n error");
-//                   return Text("Error");
-//                 }
-//                 // return Container(
-//                 //     child: Text("${_dht.solidTEmp.toString()}"));
-//               },
-//             ),
 
     return StreamBuilder(
         stream: _dhtref.onValue,
@@ -102,6 +84,43 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Card(
+                                color: _dht.pump == 1.2
+                                    ? Colors.green
+                                    : Colors.white,
+                                elevation: 2,
+                                child: Icon(
+                                  Icons.water_damage,
+                                  size: 50,
+                                  color: Colors.blue,
+                                )),
+                            Card(
+                                elevation: 2,
+                                color: _dht.fan == -1.2
+                                    ? Colors.green
+                                    : Colors.white,
+                                child: Icon(
+                                  Icons.fire_hydrant,
+                                  size: 50,
+                                  color: Colors.amber,
+                                )),
+                            Card(
+                              elevation: 2,
+                              color: _dht.light == 1.2
+                                  ? Colors.white
+                                  : Colors.black,
+                              child: Icon(
+                                  _dht.light == 1.2
+                                      ? Icons.wb_sunny
+                                      : Icons.lightbulb,
+                                  size: 50,
+                                  color: Colors.yellow),
+                            )
+                          ],
+                        ),
                         Container(
                           color: Colors.blue,
                           // height: 30,
