@@ -1,17 +1,47 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'userModel.dart';
+import 'package:vaiga_farmcare/models/crop.dart';
+import 'package:vaiga_farmcare/models/node.dart';
+// import 'userModel.dart';
 
 class UserProvider with ChangeNotifier {
-  List<Nodes> _node = [Nodes(temp: "", moisture: "asd")];
+  List<Node> _node = [
+    Node(
+        nodeName: "Node1",
+        nodePosition: "Row1",
+        nodeTemp: "12",
+        nodeHumidity: "32",
+        nodeSoilMoisture: "12",
+        nodeSoilTemp: "13",
+        nodeLightInt: "54",
+        nodeRelativeHumidity: "25",
+        // crop: Crop(
+        //   cropHumidity: "26",
+        //   cropLigtInt: "45",
+        //   cropName: "58",
+        //   cropSoilMoisture: "45",
+        //   cropSoilTemp: "89",
+        //   cropTemp: "82",
+        //   cropType: "agri",
+        //   cropRelativeHumidity: "82",
+        // ),
+        nodeCrop: "")
+  ];
   int selectedUser = 0;
   final databaseRef = FirebaseDatabase.instance.reference();
   String humidity = "";
   String temperature = "";
   int temp, humid;
   double td, valu;
+  int noOFNodes;
+  String no;
 
   Future<String> readDate() async {
+    databaseRef.child("numbOfNodes").once().then((DataSnapshot data) => {
+          print("${data.value}"),
+          no = data.value.toString(),
+          noOFNodes = int.parse(temperature),
+        });
     databaseRef.child("Humidity").once().then((DataSnapshot data) => {
           print("${data.value}"),
           humidity = data.value.toString(),
@@ -27,25 +57,29 @@ class UserProvider with ChangeNotifier {
     var dat = await databaseRef.child("Humidity").once();
     var da = dat.value;
 
+    // get List of Nodes
+
+    // update each crop
+
     notifyListeners();
     // return da.toString();
   }
 
-  List<User> get getUser {
-    // return [..._users];
+  List<Node> get getUser {
+    return [..._node];
   }
 
   get getSelected {
     return selectedUser;
   }
 
-  void addUser(User user) {
+  void addNode(Node node) {
     // _users.add(user);
     notifyListeners();
   }
 
-  void changeName(User user, String newName) {
-    user.name = newName;
+  void changeName(Node node, String newName) {
+    node.nodeName = newName;
     notifyListeners();
   }
 
