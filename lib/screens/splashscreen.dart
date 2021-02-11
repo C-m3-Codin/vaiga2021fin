@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:vaiga_farmcare/firebase.dart';
+import 'package:vaiga_farmcare/screens/homescreen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
