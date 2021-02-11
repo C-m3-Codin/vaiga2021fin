@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaiga_farmcare/provider/provider.dart';
+import 'package:vaiga_farmcare/screens/realtime.dart';
 import 'package:vaiga_farmcare/screens/splashscreen.dart';
 
 void main() {
@@ -8,7 +9,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
           home: SplashScreen(),
           routes: {
             "splash": (contxt) => SplashScreen(),
-            'home': (context) => HomePage()
+            'home': (context) => HomePage(),
+            'realTime': (context) => RealTime()
           },
         ));
   }
