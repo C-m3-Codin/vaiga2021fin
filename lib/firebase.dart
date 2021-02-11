@@ -9,20 +9,23 @@ import 'package:vaiga_farmcare/models/node.dart';
 Future initializeFirebaseApp(BuildContext context) async {
   await Firebase.initializeApp().then((_) {
     print('Firebase gets initialized');
+    cropsFromFirestore().then((_) => nodesFromFirestore());
+
     readFromRTDB();
   });
 }
 
 String readFromRTDB() {
-  DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
+  DatabaseReference databaseReference =
+      FirebaseDatabase.instance.reference().child('Node1/AhumidNow');
   databaseReference.once().then((DataSnapshot datasnapshot) {
-    print(datasnapshot.value['test string']);
-    return datasnapshot.value['test string'];
+    print(datasnapshot.value);
+    return datasnapshot.value;
   });
 }
 
 nodeToFirestore(Node node) {
-  FirebaseFirestore.instance.collection('nodes').doc().set({
+  FirebaseFirestore.instance.collection('nodes').doc(node.nodeName).set({
     'nodeName': node.nodeName,
     'nodePosition': node.nodePosition,
     'nodeHumidity': node.nodeHumidity,
@@ -36,7 +39,7 @@ nodeToFirestore(Node node) {
 }
 
 cropToFirestore(Crop crop) {
-  FirebaseFirestore.instance.collection('crops').doc().set({
+  FirebaseFirestore.instance.collection('crops').doc(crop.cropName).set({
     'cropName': crop.cropName,
     'cropHumidity': crop.cropHumidity,
     'cropLigtInt': crop.cropLigtInt,
@@ -48,7 +51,7 @@ cropToFirestore(Crop crop) {
   });
 }
 
-nodesFromFirestore() async {
+Future nodesFromFirestore() async {
   nodesList = [];
   await FirebaseFirestore.instance
       .collection('nodes')
@@ -62,7 +65,7 @@ nodesFromFirestore() async {
   print(nodesList.toString());
 }
 
-cropsFromFirestore() async {
+Future cropsFromFirestore() async {
   cropsList = [];
   await FirebaseFirestore.instance
       .collection('crops')
@@ -73,6 +76,7 @@ cropsFromFirestore() async {
       cropsList.add(crop);
     });
   });
+  print(cropsList.toString());
 }
 
 Future readFromRTDBTemperature() {

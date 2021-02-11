@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:vaiga_farmcare/firebase.dart';
 import 'package:vaiga_farmcare/models/crop.dart';
@@ -9,7 +10,7 @@ class RealTime extends StatefulWidget {
 }
 
 class _RealTimeState extends State<RealTime> {
-  var data;
+  // var data;
 
   // getData() async {
   //   data = (await FirebaseDatabase.instance.reference().child("Atemp").once())
