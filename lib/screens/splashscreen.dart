@@ -1,7 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vaiga_farmcare/firebase.dart';
+<<<<<<< HEAD
 import 'package:vaiga_farmcare/screens/homescreen.dart';
+=======
+import 'package:vaiga_farmcare/provider/provider.dart';
+>>>>>>> 920d1d20f221d0c86915bbee7daab3857b1145da
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -15,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(
       Duration(seconds: 3),
-      () => null,
+      () => Navigator.pushNamed(context, 'home'),
     );
   }
   //hey there
@@ -35,6 +40,28 @@ class _SplashScreenState extends State<SplashScreen> {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    final prov = Provider.of<userProvider>(context);
+    final uses = prov.getUser;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Farm Care"),
+      ),
+      body: Container(
+        child: Text("Bam"),
       ),
     );
   }
