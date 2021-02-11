@@ -31,10 +31,13 @@ class UserProvider with ChangeNotifier {
   final databaseRef = FirebaseDatabase.instance.reference();
   String humidity = "";
   String temperature = "";
+  String soilMoisture = "";
   int temp, humid;
   double td, valu;
   int noOFNodes;
   String no;
+
+  // var strmValues = databaseRef.child("Node").once()
 
   Future<String> readDate() async {
     databaseRef.child("numbOfNodes").once().then((DataSnapshot data) => {
@@ -42,14 +45,27 @@ class UserProvider with ChangeNotifier {
           no = data.value.toString(),
           noOFNodes = int.parse(temperature),
         });
-    databaseRef.child("Humidity").once().then((DataSnapshot data) => {
-          print("${data.value}"),
-          humidity = data.value.toString(),
-          humid = int.parse(humidity)
-        });
-    databaseRef.child("Temperature").once().then((DataSnapshot data) => {
+    databaseRef
+        .child("Node1")
+        .child("AhumidNow")
+        .once()
+        .then((DataSnapshot data) {
+      print("${data.value}");
+      humidity = data.value.toString();
+      print("here lies your shit \n\n\n\n $humidity");
+      humid = int.parse(humidity);
+    });
+    databaseRef.child("Atemp").once().then((DataSnapshot data) => {
           print("${data.value}"),
           temperature = data.value.toString(),
+          temp = int.parse(temperature),
+          td = temp - ((100 - humid) / 100),
+          valu = 100 - (((temp - td) / temp) * 100)
+        });
+
+    databaseRef.child("Stemp").once().then((DataSnapshot data) => {
+          print("${data.value}"),
+          soilMoisture = data.value.toString(),
           temp = int.parse(temperature),
           td = temp - ((100 - humid) / 100),
           valu = 100 - (((temp - td) / temp) * 100)
@@ -64,6 +80,10 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
     // return da.toString();
   }
+
+  // Stream<DataSnapshot> get realData {
+  //   return databaseRef.child('Node1').once().asStream();
+  // }
 
   List<Node> get getUser {
     return [..._node];
