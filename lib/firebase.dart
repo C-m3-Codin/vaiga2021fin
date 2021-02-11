@@ -74,3 +74,11 @@ cropsFromFirestore() async {
     });
   });
 }
+
+Future readFromRTDBTemperature() {
+  DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
+  databaseReference.once().then((DataSnapshot datasnapshot) {
+    print(datasnapshot.value['test string']);
+    return datasnapshot.value['test string'];
+  });
+}
