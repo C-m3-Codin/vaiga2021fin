@@ -100,20 +100,48 @@ class _HomePageState extends State<HomePage> {
                                     ? Colors.green
                                     : Colors.white,
                                 elevation: 2,
-                                child: Icon(
-                                  Icons.water_damage,
-                                  size: 50,
-                                  color: Colors.blue,
+                                child: InkWell(
+                                  onTap: () {
+                                    var value = _dht.pump == 1.2 ? -1.2 : 1.2;
+                                    print(
+                                        "\n\n\n\n\n\n\n\n\n\nturn on sprayer\n\n\n\n\n\n\n");
+                                    FirebaseDatabase.instance
+                                        .reference()
+                                        .child("Node1")
+                                        .update({
+                                      'irrigation': value,
+                                      // 'description': 'Team Lead'
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.water_damage,
+                                    size: 50,
+                                    color: Colors.blue,
+                                  ),
                                 )),
                             Card(
                                 elevation: 2,
                                 color: _dht.fan == -1.2
                                     ? Colors.green
                                     : Colors.white,
-                                child: Icon(
-                                  Icons.fire_hydrant,
-                                  size: 50,
-                                  color: Colors.amber,
+                                child: InkWell(
+                                  onTap: () {
+                                    var value = _dht.fan == 1.2 ? -1.2 : 1.2;
+                                    print(
+                                        "\n\n\n\n\n\n\n\n\n\nTurn On Fan\n\n\n\n\n\n\n");
+                                    FirebaseDatabase.instance
+                                        .reference()
+                                        .child("Node1")
+                                        .update({
+                                      'Fan': value,
+                                      // 'description': 'Team Lead'
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.fire_hydrant,
+                                    size: 50,
+                                    color: Colors.amber,
+                                  ),
                                 )),
                             Card(
                               elevation: 2,
