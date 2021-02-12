@@ -73,6 +73,7 @@ class _GraphDataState extends State<GraphData> {
     prov.showTemperature();
     // prov.showTemperature();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // StaggeredGridView.count(
         //   crossAxisCount: 4,
@@ -81,20 +82,24 @@ class _GraphDataState extends State<GraphData> {
         //   children: [Padding(padding: EdgeInsets.all(8.0))],
         //   staggeredTiles: [StaggeredTile.extent(4, 250.0)],
         // ),
-        Container(child: Text("Ch here")),
+        // Container(child: Text("Ch here")),
         // RaisedButton(onPressed: () {
         // print("Entered 85");
         // prov.showTemperature();
         // }),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text('HUMIDITY', style: TextStyle(fontSize: 18)),
+        ),
         prov.humidity.isEmpty
             ? Text("get fetch")
             : Card(
-                elevation: 20,
+                elevation: 10,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Sparkline(
                     data: prov.humidity.sublist(
-                        prov.humidity.length - 20, prov.humidity.length),
+                        prov.humidity.length - 100, prov.humidity.length),
                     lineColor: Colors.redAccent,
                     fillColor: Colors.lightGreen[200],
                     pointsMode: PointsMode.all,
@@ -103,9 +108,13 @@ class _GraphDataState extends State<GraphData> {
                 ),
               ),
         Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text('TEMPERATURE', style: TextStyle(fontSize: 18)),
+        ),
+        Padding(
           padding: const EdgeInsets.all(8.0),
           child: Card(
-            elevation: 20,
+            elevation: 10,
             child: Sparkline(
               data: prov.temperature.sublist(
                   prov.temperature.length - 20, prov.temperature.length),
@@ -116,9 +125,12 @@ class _GraphDataState extends State<GraphData> {
             ),
           ),
         ),
-
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text('SOIL TEMPERATURE', style: TextStyle(fontSize: 18)),
+        ),
         Card(
-          elevation: 20,
+          elevation: 10,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Sparkline(
