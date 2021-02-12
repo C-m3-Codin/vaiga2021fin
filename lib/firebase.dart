@@ -24,6 +24,14 @@ String readFromRTDB() {
   });
 }
 
+class DatabaseServices {
+  final databaseRef = FirebaseDatabase.instance.reference();
+
+  Stream<DataSnapshot> get realData {
+    return databaseRef.child('Node1').once().asStream();
+  }
+}
+
 nodeToFirestore(Node node) {
   FirebaseFirestore.instance.collection('nodes').doc(node.nodeName).set({
     'nodeName': node.nodeName,
