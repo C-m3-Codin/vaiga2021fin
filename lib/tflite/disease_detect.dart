@@ -68,16 +68,10 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.transparent,
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   title: Text(
-      //     "Tensorflow Lite",
-      //     style: TextStyle(color: Colors.white, fontSize: 25),
-      //   ),
-      //   backgroundColor: Colors.amber,
-      //   elevation: 0,
-      // ),
+      appBar: AppBar(
+        title: Text('DETECT CROP DISEASES'),
+        backgroundColor: Colors.blue[800],
+      ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,

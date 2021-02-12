@@ -10,15 +10,42 @@ class CropData extends StatefulWidget {
 class _CropDataState extends State<CropData> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: cropsList.length,
-      itemBuilder: (context, index) => ListTile(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => CropDetails(cropsList[index])),
-        ),
-        title: Text(cropsList[index].cropName),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('MASTER DATA'),
+        backgroundColor: Colors.blue[800],
+      ),
+      body: Column(
+        children: [
+          ExpansionTile(title: Text('CROPS'), children: [
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: cropsList.length,
+              itemBuilder: (context, index) => ListTile(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CropDetails(cropsList[index])),
+                ),
+                title: Text(cropsList[index].cropName),
+              ),
+            ),
+          ]),
+          ExpansionTile(title: Text('FERTILISERS'), children: [
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: cropsList.length,
+              itemBuilder: (context, index) => ListTile(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CropDetails(cropsList[index])),
+                ),
+                title: Text(cropsList[index].cropName),
+              ),
+            ),
+          ]),
+        ],
       ),
     );
   }

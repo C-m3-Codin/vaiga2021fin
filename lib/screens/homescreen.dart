@@ -30,7 +30,8 @@ class TabBarDemo extends StatelessWidget {
                 Tab(icon: Icon(Icons.soap_outlined)),
               ],
             ),
-            title: Text('FarmCare'),
+            title: Text('FARMCARE'),
+            centerTitle: true,
           ),
           body: TabBarView(
             children: [
@@ -73,258 +74,265 @@ class _HomePageState extends State<HomePage> {
     // final uses = prov.getUser;
     DatabaseReference _dhtref = FirebaseDatabase.instance.reference().child('');
 
-    return StreamBuilder(
-        stream: _dhtref.onValue,
-        builder: (context, snapshot) {
-          if (snapshot.hasData &&
-              !snapshot.hasError &&
-              snapshot.data.snapshot.value != null) {
-            // print("${snapshot.data.snapshot.value.toString()}");
-            var _dht = DHT.fromJson(snapshot.data.snapshot.value['Node1']);
-            print("DHT: ${_dht.solidTEmp} / ${_dht.humidity} / ${_dht.temp}");
-            return Container(
-                // color: Colors.blue,
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Card(
-                                color: _dht.pump == 1.2
-                                    ? Colors.green
-                                    : Colors.white,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('OVERVIEW OF POLYHOUSE'),
+        backgroundColor: Colors.blue[800],
+      ),
+      body: StreamBuilder(
+          stream: _dhtref.onValue,
+          builder: (context, snapshot) {
+            if (snapshot.hasData &&
+                !snapshot.hasError &&
+                snapshot.data.snapshot.value != null) {
+              // print("${snapshot.data.snapshot.value.toString()}");
+              var _dht = DHT.fromJson(snapshot.data.snapshot.value['Node1']);
+              print("DHT: ${_dht.solidTEmp} / ${_dht.humidity} / ${_dht.temp}");
+              return Container(
+                  // color: Colors.blue,
+                  child: Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Card(
+                                  color: _dht.pump == 1.2
+                                      ? Colors.green
+                                      : Colors.white,
+                                  elevation: 2,
+                                  child: InkWell(
+                                    onTap: () {
+                                      var value = _dht.pump == 1.2 ? -1.2 : 1.2;
+                                      print(
+                                          "\n\n\n\n\n\n\n\n\n\nturn on sprayer\n\n\n\n\n\n\n");
+                                      FirebaseDatabase.instance
+                                          .reference()
+                                          .child("Node1")
+                                          .update({
+                                        'irrigation': value,
+                                        // 'description': 'Team Lead'
+                                      });
+                                    },
+                                    child: Icon(
+                                      Icons.water_damage,
+                                      size: 50,
+                                      color: Colors.blue,
+                                    ),
+                                  )),
+                              Card(
+                                  elevation: 2,
+                                  color: _dht.fan == -1.2
+                                      ? Colors.green
+                                      : Colors.white,
+                                  child: InkWell(
+                                    onTap: () {
+                                      var value = _dht.fan == 1.2 ? -1.2 : 1.2;
+                                      print(
+                                          "\n\n\n\n\n\n\n\n\n\nTurn On Fan\n\n\n\n\n\n\n");
+                                      FirebaseDatabase.instance
+                                          .reference()
+                                          .child("Node1")
+                                          .update({
+                                        'Fan': value,
+                                        // 'description': 'Team Lead'
+                                      });
+                                    },
+                                    child: Icon(
+                                      Icons.fire_hydrant,
+                                      size: 50,
+                                      color: Colors.amber,
+                                    ),
+                                  )),
+                              Card(
                                 elevation: 2,
-                                child: InkWell(
-                                  onTap: () {
-                                    var value = _dht.pump == 1.2 ? -1.2 : 1.2;
-                                    print(
-                                        "\n\n\n\n\n\n\n\n\n\nturn on sprayer\n\n\n\n\n\n\n");
-                                    FirebaseDatabase.instance
-                                        .reference()
-                                        .child("Node1")
-                                        .update({
-                                      'irrigation': value,
-                                      // 'description': 'Team Lead'
-                                    });
-                                  },
-                                  child: Icon(
-                                    Icons.water_damage,
+                                color: _dht.light == 1.2
+                                    ? Colors.white
+                                    : Colors.black,
+                                child: Icon(
+                                    _dht.light == 1.2
+                                        ? Icons.wb_sunny
+                                        : Icons.lightbulb,
                                     size: 50,
-                                    color: Colors.blue,
+                                    color: Colors.yellow),
+                              )
+                            ],
+                          ),
+                          Container(
+                            height: 72,
+                            color: Colors.blue,
+                            child: _dht.humidity == -1
+                                ? Text("Not fetched")
+                                : Center(
+                                    child: Card(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(Icons.hot_tub),
+                                          Text(
+                                            "Soil Temperature : ${_dht.solidTEmp}",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
                                   ),
-                                )),
-                            Card(
-                                elevation: 2,
-                                color: _dht.fan == -1.2
-                                    ? Colors.green
-                                    : Colors.white,
-                                child: InkWell(
-                                  onTap: () {
-                                    var value = _dht.fan == 1.2 ? -1.2 : 1.2;
-                                    print(
-                                        "\n\n\n\n\n\n\n\n\n\nTurn On Fan\n\n\n\n\n\n\n");
-                                    FirebaseDatabase.instance
-                                        .reference()
-                                        .child("Node1")
-                                        .update({
-                                      'Fan': value,
-                                      // 'description': 'Team Lead'
-                                    });
-                                  },
-                                  child: Icon(
-                                    Icons.fire_hydrant,
-                                    size: 50,
-                                    color: Colors.amber,
+                          ),
+                          // Container(
+                          //   color: Colors.blue,
+                          //   // height: 30,
+                          //   child: _dht.humidity == -1
+                          //       ? Text("temperature", textAlign: TextAlign.center)
+                          //       : Card(
+                          //           child: Text(
+                          //               "Soil Temperature is ${_dht.solidTEmp}",
+                          //               textAlign: TextAlign.center)),
+                          // ),
+                          // Text("Humidity"),
+                          Container(
+                            height: 72,
+                            color: Colors.blue,
+                            child: _dht.humidity == -1
+                                ? Text("Not fetched")
+                                : Center(
+                                    child: Card(
+                                        elevation: 6.0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Icon(Icons.waterfall_chart),
+                                              Text(
+                                                " Humidity : ${_dht.humidity}",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(fontSize: 20),
+                                              ),
+                                            ],
+                                          ),
+                                        )),
                                   ),
-                                )),
-                            Card(
-                              elevation: 2,
-                              color: _dht.light == 1.2
-                                  ? Colors.white
-                                  : Colors.black,
-                              child: Icon(
-                                  _dht.light == 1.2
-                                      ? Icons.wb_sunny
-                                      : Icons.lightbulb,
-                                  size: 50,
-                                  color: Colors.yellow),
-                            )
-                          ],
-                        ),
-                        Container(
-                          height: 72,
-                          color: Colors.blue,
-                          child: _dht.humidity == -1
-                              ? Text("Not fetched")
-                              : Center(
-                                  child: Card(
-                                      child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Icon(Icons.hot_tub),
-                                        Text(
-                                          "Soil Temperature : ${_dht.solidTEmp}",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                      ],
-                                    ),
-                                  )),
-                                ),
-                        ),
-                        // Container(
-                        //   color: Colors.blue,
-                        //   // height: 30,
-                        //   child: _dht.humidity == -1
-                        //       ? Text("temperature", textAlign: TextAlign.center)
-                        //       : Card(
-                        //           child: Text(
-                        //               "Soil Temperature is ${_dht.solidTEmp}",
-                        //               textAlign: TextAlign.center)),
-                        // ),
-                        // Text("Humidity"),
-                        Container(
-                          height: 72,
-                          color: Colors.blue,
-                          child: _dht.humidity == -1
-                              ? Text("Not fetched")
-                              : Center(
-                                  child: Card(
-                                      elevation: 6.0,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Icon(Icons.waterfall_chart),
-                                            Text(
-                                              " Humidity : ${_dht.humidity}",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                          ],
-                                        ),
-                                      )),
-                                ),
-                        ),
-                        // Container(
-                        //   color: Colors.blue,
-                        //   // height: 30,
-                        //   child: _dht.humidity == -1
-                        //       ? Text("Not Fetched", textAlign: TextAlign.center)
-                        //       : Card(
-                        //           child: Text("Humidity is ${_dht.humidity}",
-                        //               textAlign: TextAlign.center)),
-                        // ),
-                        // RecomendsPlants(),
-                        // FeaturedPlants(),
-                        // Text("Dew Point"),
-                        Container(
-                          height: 72,
-                          color: Colors.blue,
-                          child: _dht.humidity == -1
-                              ? Text("Not fetched")
-                              : Center(
-                                  child: Card(
-                                      child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Icon(Icons.thermostat_rounded),
-                                        Text(
-                                          " Temperature : ${_dht.temp}",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                      ],
-                                    ),
-                                  )),
-                                ),
-                        ),
-                        Container(
-                          height: 72,
-                          color: Colors.blue,
-                          child: _dht.humidity == -1
-                              ? Text("Not fetched")
-                              : Center(
-                                  child: Card(
-                                      child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Icon(Icons.wb_sunny),
-                                        Text(
-                                          "Light Intensity : ${_dht.light}",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                      ],
-                                    ),
-                                  )),
-                                ),
-                        ),
-                        // Container(
-                        //   color: Colors.blue,
-                        //   child: _dht.humidity == -1
-                        //       ? Text("Not fetched")
-                        //       : Card(
-                        //           child: Text("Soil moist is ${_dht.solidTEmp}",
-                        //               textAlign: TextAlign.center)),
-                        // ),
-                        Container(
-                          height: 72,
-                          color: Colors.blue,
-                          child: _dht.humidity == -1
-                              ? Text("Not fetched")
-                              : Center(
-                                  child: Card(
-                                      child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                          ),
+                          // Container(
+                          //   color: Colors.blue,
+                          //   // height: 30,
+                          //   child: _dht.humidity == -1
+                          //       ? Text("Not Fetched", textAlign: TextAlign.center)
+                          //       : Card(
+                          //           child: Text("Humidity is ${_dht.humidity}",
+                          //               textAlign: TextAlign.center)),
+                          // ),
+                          // RecomendsPlants(),
+                          // FeaturedPlants(),
+                          // Text("Dew Point"),
+                          Container(
+                            height: 72,
+                            color: Colors.blue,
+                            child: _dht.humidity == -1
+                                ? Text("Not fetched")
+                                : Center(
+                                    child: Card(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(Icons.thermostat_rounded),
+                                          Text(
+                                            " Temperature : ${_dht.temp}",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                  ),
+                          ),
+                          Container(
+                            height: 72,
+                            color: Colors.blue,
+                            child: _dht.humidity == -1
+                                ? Text("Not fetched")
+                                : Center(
+                                    child: Card(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(Icons.wb_sunny),
+                                          Text(
+                                            "Light Intensity : ${_dht.light}",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                                  ),
+                          ),
+                          // Container(
+                          //   color: Colors.blue,
+                          //   child: _dht.humidity == -1
+                          //       ? Text("Not fetched")
+                          //       : Card(
+                          //           child: Text("Soil moist is ${_dht.solidTEmp}",
+                          //               textAlign: TextAlign.center)),
+                          // ),
+                          Container(
+                            height: 72,
+                            color: Colors.blue,
+                            child: _dht.humidity == -1
+                                ? Text("Not fetched")
+                                : Center(
+                                    child: Card(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Text(
+                                        "Soil moist : ${_dht.smoistNow}",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    )),
+                                  ),
+                          ),
+                          Container(
+                            color: Colors.blue,
+                            child: _dht.humidity == -1
+                                ? Text("Not fetched")
+                                : Card(
                                     child: Text(
-                                      "Soil moist : ${_dht.smoistNow}",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                  )),
-                                ),
-                        ),
-                        Container(
-                          color: Colors.blue,
-                          child: _dht.humidity == -1
-                              ? Text("Not fetched")
-                              : Card(
-                                  child: Text("Soil moist is ${_dht.smoistNow}",
-                                      textAlign: TextAlign.center)),
-                        ),
+                                        "Soil moist is ${_dht.smoistNow}",
+                                        textAlign: TextAlign.center)),
+                          ),
 
-                        // RaisedButton(
-                        //     color: Colors.green,
-                        //     onPressed: () async {
-                        //       print("\n\n\n tadaaa$temperature");
-                        //       // humidity = await readDate();
-                        //       await prov.readDate();
-                        //       print("hum,$humidity");
-                        //       setState(() {});
-                        //     },
-                        //     child: Text("fetch values")),
-                      ],
-                    )));
-          } else {
-            return Container(child: Text("Fetch ing"));
-          }
-        });
+                          // RaisedButton(
+                          //     color: Colors.green,
+                          //     onPressed: () async {
+                          //       print("\n\n\n tadaaa$temperature");
+                          //       // humidity = await readDate();
+                          //       await prov.readDate();
+                          //       print("hum,$humidity");
+                          //       setState(() {});
+                          //     },
+                          //     child: Text("fetch values")),
+                        ],
+                      )));
+            } else {
+              return Container(child: Text("Fetch ing"));
+            }
+          }),
+    );
   }
 }
 
@@ -381,15 +389,21 @@ class NodeCollectionPage extends StatefulWidget {
 class NodeCollectionPageState extends State<NodeCollectionPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Align(
-            alignment: Alignment.center,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  RecomendsPlants(),
-                  FeaturedPlants(),
-                ])));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('MANAGE NODES'),
+        backgroundColor: Colors.blue[800],
+      ),
+      body: Container(
+          child: Align(
+              alignment: Alignment.center,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    RecomendsPlants(),
+                    FeaturedPlants(),
+                  ]))),
+    );
   }
 }
