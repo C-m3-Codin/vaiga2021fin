@@ -170,7 +170,7 @@ class CropDetailsImageAndIcons extends StatelessWidget {
             ),
             Container(
               height: size.height * 0.7,
-              width: size.width * 0.65,
+              width: size.width * 0.55,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(63),

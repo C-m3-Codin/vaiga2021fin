@@ -94,7 +94,7 @@ class _GraphDataState extends State<GraphData> {
                   padding: const EdgeInsets.all(8.0),
                   child: Sparkline(
                     data: prov.humidity.sublist(
-                        prov.humidity.length - 20, prov.humidity.length),
+                        prov.humidity.length - 100, prov.humidity.length),
                     lineColor: Colors.redAccent,
                     fillColor: Colors.lightGreen[200],
                     pointsMode: PointsMode.all,
@@ -122,7 +122,7 @@ class _GraphDataState extends State<GraphData> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Sparkline(
-              data: prov.temperature.sublist(prov.soilTemperature.length - 20,
+              data: prov.temperature.sublist(prov.soilTemperature.length - 120,
                   prov.soilTemperature.length),
               lineColor: Colors.blueAccent,
               fillColor: Colors.blueAccent,
