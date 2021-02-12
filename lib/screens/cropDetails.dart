@@ -282,13 +282,13 @@ class TitleAndPrice extends StatelessWidget {
             ),
           ),
           Spacer(),
-          Text(
-            "\$$price",
-            style: Theme.of(context)
-                .textTheme
-                .headline5
-                .copyWith(color: kPrimaryColor),
-          )
+          // Text(
+          //   "\$$price",
+          //   style: Theme.of(context)
+          //       .textTheme
+          //       .headline5
+          //       .copyWith(color: kPrimaryColor),
+          // )
         ],
       ),
     );
