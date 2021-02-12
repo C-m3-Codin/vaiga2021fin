@@ -6,6 +6,7 @@ class DHT {
   final double fan;
   final double pump;
   final double light;
+  // final double light;
 
   DHT(
       {this.temp,
@@ -31,7 +32,7 @@ class DHT {
         solidTEmp: parser(json['StempNow']),
         smoistNow: parser(json['smoistNow']),
         pump: parser(json['irrigation']),
-        light: parser(json['light']),
+        light: parser(json['LightNow']),
         fan: parser(json['Fan']));
   }
 }

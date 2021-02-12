@@ -166,10 +166,17 @@ class _HomePageState extends State<HomePage> {
                                   child: Card(
                                       child: Padding(
                                     padding: const EdgeInsets.all(16.0),
-                                    child: Text(
-                                      "Soil Temperature : ${_dht.solidTEmp}",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 20),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Icon(Icons.hot_tub),
+                                        Text(
+                                          "Soil Temperature : ${_dht.solidTEmp}",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ],
                                     ),
                                   )),
                                 ),
@@ -192,14 +199,22 @@ class _HomePageState extends State<HomePage> {
                               ? Text("Not fetched")
                               : Center(
                                   child: Card(
+                                      elevation: 6.0,
                                       child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Text(
-                                      " Humidity : ${_dht.humidity}",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                  )),
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Icon(Icons.waterfall_chart),
+                                            Text(
+                                              " Humidity : ${_dht.humidity}",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                          ],
+                                        ),
+                                      )),
                                 ),
                         ),
                         // Container(
@@ -223,10 +238,17 @@ class _HomePageState extends State<HomePage> {
                                   child: Card(
                                       child: Padding(
                                     padding: const EdgeInsets.all(16.0),
-                                    child: Text(
-                                      " Temperature : ${_dht.temp}",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 20),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Icon(Icons.thermostat_rounded),
+                                        Text(
+                                          " Temperature : ${_dht.temp}",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ],
                                     ),
                                   )),
                                 ),
@@ -240,10 +262,17 @@ class _HomePageState extends State<HomePage> {
                                   child: Card(
                                       child: Padding(
                                     padding: const EdgeInsets.all(16.0),
-                                    child: Text(
-                                      "Soil Temperature : ${_dht.solidTEmp}",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 20),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Icon(Icons.wb_sunny),
+                                        Text(
+                                          "Light Intensity : ${_dht.light}",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ],
                                     ),
                                   )),
                                 ),
@@ -266,7 +295,7 @@ class _HomePageState extends State<HomePage> {
                                       child: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Text(
-                                      "Soil moist : ${_dht.solidTEmp}",
+                                      "Soil moist : ${_dht.smoistNow}",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(fontSize: 20),
                                     ),
