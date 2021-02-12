@@ -19,13 +19,17 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
         create: (context) => UserProvider(),
         child: MaterialApp(
-          theme: ThemeData(
-            scaffoldBackgroundColor: kBackgroundColor,
-            primaryColor: kPrimaryColor,
-            textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            // visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
+          // theme: ThemeData(
+          //   // dar
+          //   scaffoldBackgroundColor: Colors.green,
+          //   primaryColor: kPrimaryColor,
+          //   textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
+          //   visualDensity: VisualDensity.adaptivePlatformDensity,
+          //   // visualDensity: VisualDensity.adaptivePlatformDensity,
+          // ),
+          theme: ThemeData.dark(),
+          darkTheme: ThemeData.dark(),
+
           home: SplashScreen(),
           routes: {
             "splash": (contxt) => SplashScreen(),
