@@ -5,6 +5,17 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:vaiga_farmcare/models/graphModel.dart';
 
+import 'package:fl_chart/fl_chart.dart';
+
+// import 'bar_chart/bar_chart_page.dart';
+// import 'bar_chart/bar_chart_page2.dart';
+// import 'line_chart/line_chart_page.dart';
+// import 'line_chart/line_chart_page2.dart';
+// import 'line_chart/line_chart_page3.dart';
+// import 'line_chart/line_chart_page4.dart';
+// import 'pie_chart/pie_chart_page.dart';
+// import 'scatter_chart/scatter_chart_page.dart';
+
 class GraphData extends StatefulWidget {
   const GraphData({
     Key key,
@@ -73,7 +84,6 @@ class _GraphDataState extends State<GraphData> {
     prov.showTemperature();
     // prov.showTemperature();
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // StaggeredGridView.count(
         //   crossAxisCount: 4,
@@ -82,24 +92,19 @@ class _GraphDataState extends State<GraphData> {
         //   children: [Padding(padding: EdgeInsets.all(8.0))],
         //   staggeredTiles: [StaggeredTile.extent(4, 250.0)],
         // ),
-        // Container(child: Text("Ch here")),
+        Container(child: Text("Ch here")),
         // RaisedButton(onPressed: () {
         // print("Entered 85");
         // prov.showTemperature();
         // }),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text('HUMIDITY', style: TextStyle(fontSize: 18)),
-        ),
         prov.humidity.isEmpty
             ? Text("get fetch")
             : Card(
-                elevation: 10,
+                elevation: 20,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Sparkline(
-                    data: prov.humidity.sublist(
-                        prov.humidity.length - 100, prov.humidity.length),
+                    data: prov.humidity,
                     lineColor: Colors.redAccent,
                     fillColor: Colors.lightGreen[200],
                     pointsMode: PointsMode.all,
@@ -108,16 +113,16 @@ class _GraphDataState extends State<GraphData> {
                 ),
               ),
         Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text('TEMPERATURE', style: TextStyle(fontSize: 18)),
-        ),
-        Padding(
           padding: const EdgeInsets.all(8.0),
           child: Card(
-            elevation: 10,
-            child: Sparkline(
+            elevation: 20,
+            child:
+                // LineChartPage(),
+
+                Sparkline(
               data: prov.temperature.sublist(
                   prov.temperature.length - 20, prov.temperature.length),
+              // data: prov.temperature,
               lineColor: Colors.yellow,
               fillColor: Colors.lightGreen[200],
               pointsMode: PointsMode.all,
@@ -125,17 +130,15 @@ class _GraphDataState extends State<GraphData> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text('SOIL TEMPERATURE', style: TextStyle(fontSize: 18)),
-        ),
+
         Card(
-          elevation: 10,
+          elevation: 20,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Sparkline(
-              data: prov.temperature.sublist(prov.soilTemperature.length - 20,
-                  prov.soilTemperature.length),
+              // data: prov.temperature.sublist(prov.soilTemperature.length - 120,
+              // prov.soilTemperature.length),
+              data: prov.soilMoisture,
               lineColor: Colors.blueAccent,
               fillColor: Colors.blueAccent,
               pointsMode: PointsMode.all,
