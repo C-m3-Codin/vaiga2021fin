@@ -40,8 +40,9 @@ class TabBarDemo extends StatelessWidget {
               HomePage(),
               NodeCollectionPage(),
               // Icon(Icons.directions_bike),
-              ChangeNotifierProvider(
-                  create: (context) => GraphMode(), child: GraphData()),
+              // ChangeNotifierProvider(
+              //     create: (context) => GraphMode(), child: GraphData()),
+              Shell(),
               DiseaseDetection(), CropData(),
             ],
           ),

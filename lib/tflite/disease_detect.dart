@@ -67,6 +67,7 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.transparent,
       // appBar: AppBar(
       //   centerTitle: true,
       //   title: Text(
@@ -114,7 +115,12 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 20),
                                     )
-                                  : Container(child: Text(""))
+                                  : Container(child: Text("")),
+                          SizedBox(height: 10),
+                          Text(
+                            'Pick an image to test',
+                            style: TextStyle(fontSize: 18),
+                          )
                         ],
                       ),
                     ),
