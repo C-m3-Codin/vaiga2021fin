@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaiga_farmcare/provider/provider.dart';
-import 'package:vaiga_farmcare/screens/graph.dart';
 import 'package:vaiga_farmcare/screens/homescreen.dart';
 import 'package:vaiga_farmcare/screens/realtime.dart';
 import 'package:vaiga_farmcare/screens/splashscreen.dart';
 import 'package:vaiga_farmcare/tflite/disease_detect.dart';
-
-import 'constants.dart';
 
 void main() {
   runApp(MyApp());

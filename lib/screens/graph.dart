@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:oscilloscope/oscilloscope.dart';
 import 'dart:async';
+import 'dart:math' as math;
 
 void main() => runApp(new MyApp());
 

@@ -1,6 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:vaiga_farmcare/models/crop.dart';
 import 'package:vaiga_farmcare/models/node.dart';
 // import 'userModel.dart';
 
@@ -108,7 +107,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future readFromRTDBTemperature() {
+  readFromRTDBTemperature() {
     DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
     databaseReference.once().then((DataSnapshot datasnapshot) {
       print(datasnapshot.value['Temperature']);

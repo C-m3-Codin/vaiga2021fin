@@ -1,10 +1,7 @@
-import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vaiga_farmcare/firebase.dart';
 import 'package:vaiga_farmcare/models/StreamParser.dart';
-import 'package:vaiga_farmcare/models/graphModel.dart';
 import 'package:vaiga_farmcare/provider/provider.dart';
 import 'package:vaiga_farmcare/screens/Graph.dart';
 import 'package:vaiga_farmcare/screens/LatestNodes.dart';
@@ -72,8 +69,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final prov = Provider.of<UserProvider>(context);
-    final uses = prov.getUser;
+    // final prov = Provider.of<UserProvider>(context);
+    // final uses = prov.getUser;
     DatabaseReference _dhtref = FirebaseDatabase.instance.reference().child('');
 
     return StreamBuilder(

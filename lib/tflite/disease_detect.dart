@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:tflite/tflite.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DiseaseDetection extends StatefulWidget {
   @override
@@ -81,7 +82,7 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
         child: Container(
           color: Colors.white,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               _loading
                   ? Container(
@@ -137,6 +138,14 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
                 ),
                 backgroundColor: Colors.amber,
               ),
+              Divider(),
+              RaisedButton(
+                onPressed: () {
+                  launch(
+                      'https://wa.me/918240375474?text=Hi, could you advise me with ${_outputs[0]["label"]}');
+                },
+                child: Text('Ask our experts on WhatsApp'),
+              )
             ],
           ),
         ),

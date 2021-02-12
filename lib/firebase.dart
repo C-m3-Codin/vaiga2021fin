@@ -15,7 +15,7 @@ Future initializeFirebaseApp(BuildContext context) async {
   });
 }
 
-String readFromRTDB() {
+readFromRTDB() {
   DatabaseReference databaseReference =
       FirebaseDatabase.instance.reference().child('Node1/AhumidNow');
   databaseReference.once().then((DataSnapshot datasnapshot) {
@@ -90,7 +90,7 @@ Future cropsFromFirestore() async {
   print(cropsList.toString());
 }
 
-Future readFromRTDBTemperature() {
+readFromRTDBTemperature() {
   DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
   databaseReference.once().then((DataSnapshot datasnapshot) {
     print(datasnapshot.value['test string']);

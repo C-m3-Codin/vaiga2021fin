@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vaiga_farmcare/data.dart';
-import 'package:vaiga_farmcare/models/crop.dart';
 import 'package:vaiga_farmcare/screens/cropDetails.dart';
 
 class CropData extends StatefulWidget {
