@@ -1,31 +1,41 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vaiga_farmcare/models/crop.dart';
 // import 'package:flutter/widgets.dart';
 // import 'package:flutter/material.dart';
 // import 'package:plant_app/screens/details/components/body.dart';
 
 import '../constants.dart';
 
-class DetailsScreen extends StatelessWidget {
+class CropDetails extends StatelessWidget {
+  final Crop crop;
+  CropDetails(this.crop);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(),
+      body: CropDetailsBody(crop),
     );
   }
 }
 
-class Body extends StatelessWidget {
+class CropDetailsBody extends StatelessWidget {
+  final Crop crop;
+  CropDetailsBody(this.crop);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          ImageAndIcons(size: size),
-          TitleAndPrice(title: "NODE 1L3", country: "TOMATO", price: 440),
+          CropDetailsImageAndIcons(
+            size: size,
+            crop: crop,
+          ),
+          TitleAndPrice(
+              title: crop.cropName.toUpperCase(),
+              country: crop.cropType.toUpperCase(),
+              price: 440),
           SizedBox(height: kDefaultPadding),
           Row(
             children: <Widget>[
@@ -69,11 +79,10 @@ class Body extends StatelessWidget {
 // import '../../../constants.dart';
 // import 'icon_card.dart';
 
-class ImageAndIcons extends StatelessWidget {
-  const ImageAndIcons({
-    Key key,
-    @required this.size,
-  }) : super(key: key);
+class CropDetailsImageAndIcons extends StatelessWidget {
+  final Crop crop;
+  const CropDetailsImageAndIcons({Key key, @required this.size, this.crop})
+      : super(key: key);
 
   final Size size;
 
@@ -110,7 +119,7 @@ class ImageAndIcons extends StatelessWidget {
                         children: [
                           IconCard(icon: "assets/icons/sun.svg"),
                           Text(
-                            '125 lux',
+                            '${crop.cropLigtInt} lux',
                             style: TextStyle(fontSize: 18),
                           )
                         ],
@@ -136,7 +145,7 @@ class ImageAndIcons extends StatelessWidget {
                         children: [
                           IconCard(icon: "assets/icons/icon_3.svg"),
                           Text(
-                            '125 lux',
+                            '${crop.cropSoilMoisture} %',
                             style: TextStyle(fontSize: 18),
                           )
                         ],
@@ -149,7 +158,7 @@ class ImageAndIcons extends StatelessWidget {
                         children: [
                           IconCard(icon: "assets/icons/icon_2.svg"),
                           Text(
-                            '125 lux',
+                            '${crop.cropTemp} C',
                             style: TextStyle(fontSize: 18),
                           )
                         ],

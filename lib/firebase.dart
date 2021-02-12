@@ -67,6 +67,7 @@ Future nodesFromFirestore() async {
       .then((QuerySnapshot querySnapshot) {
     querySnapshot.docs.forEach((nodeFromFirestore) {
       Node node = nodeFromQuerySnapshot(nodeFromFirestore);
+      print(node.nodeLightInt);
       nodesList.add(node);
     });
   });
@@ -81,6 +82,8 @@ Future cropsFromFirestore() async {
       .then((QuerySnapshot querySnapshot) {
     querySnapshot.docs.forEach((cropFromFirestore) {
       Crop crop = cropFromQuerySnapshot(cropFromFirestore);
+      print(crop.cropLigtInt);
+
       cropsList.add(crop);
     });
   });

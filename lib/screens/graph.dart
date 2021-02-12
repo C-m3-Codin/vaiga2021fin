@@ -1,126 +1,137 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:oscilloscope/oscilloscope.dart';
-import 'dart:math';
-import 'dart:async';
+import 'package:flutter_sparkline/flutter_sparkline.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
+import 'package:vaiga_farmcare/models/graphModel.dart';
 
-void main() => runApp(new MyApp());
+class GraphData extends StatefulWidget {
+  const GraphData({
+    Key key,
+  }) : super(key: key);
 
-class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: "Oscilloscope Display Example",
-      home: Shell(),
-    );
-  }
+  _GraphDataState createState() => _GraphDataState();
 }
 
-class Shell extends StatefulWidget {
-  @override
-  _ShellState createState() => _ShellState();
-}
+class _GraphDataState extends State<GraphData> {
+  // List<double> humidity = [];
+  // List<double> temperature = [];
+  // List<double> soilTemperature = [];
+  // List<double> soilMoisture = [];
+  // Future<void> showTemperature() async {
+  //   // making this both a Future and async method
+  //   final databaseRefenceshumid = await FirebaseDatabase.instance
+  //       .reference()
+  //       .child("Node1")
+  //       .child("Ahumid");
 
-class _ShellState extends State<Shell> {
-  List<double> traceSine = List();
-  List<double> traceCosine = List();
-  List<double> humidityList = List();
-  List<double> tempList = List();
-  List<double> soilTempList = List();
+  //   final databaseRefencesTemp = await FirebaseDatabase.instance
+  //       .reference()
+  //       .child("Node1")
+  //       .child("Atemp");
+  //   final databaseRefencesSoilTemp = await FirebaseDatabase.instance
+  //       .reference()
+  //       .child("Node1")
+  //       .child("Stemp");
 
-  double radians = 0.0;
-  Timer _timer;
-  double dataHumidity;
-  double dataTemp;
-  double dataSoilTemp;
+  //   // databaseRefences.once()
 
-  _generateTrace(Timer t) async {
-    // generate our  values
+  //   databaseRefenceshumid.once().then((snapshot) {
+  //     Map<dynamic, dynamic> values = snapshot.value;
+  //     values.forEach((key, values) {
+  //       print(values);
+  //       humidity.add(values.toDouble());
+  //       // omitting "[keys]" from the OPs approach
+  //     });
+  //   });
 
-    var databaseReference = FirebaseDatabase.instance.reference();
+  //   databaseRefencesTemp.once().then((snapshot) {
+  //     Map<dynamic, dynamic> values = snapshot.value;
+  //     values.forEach((key, values) {
+  //       print(values);
+  //       // humidity.add(values);
+  //       temperature.add(values.toDouble());
+  //       // omitting "[keys]" from the OPs approach
+  //     });
+  //   });
 
-    await databaseReference.child('Node1/AhumidNow').once().then((value) {
-      print(value.value);
-      dataHumidity = double.parse(value.value.toString());
-    });
-    await databaseReference.child('Node1/AtempNow').once().then((value) {
-      print(value.value);
-      dataTemp = double.parse(value.value.toString());
-    });
-    await databaseReference.child('Node1/StempNow').once().then((value) {
-      print(value.value);
-      dataSoilTemp = double.parse(value.value.toString());
-    });
-
-    // Add to the growing dataset
-    setState(() {
-      humidityList.add(dataHumidity);
-      tempList.add(dataHumidity);
-      soilTempList.add(dataHumidity);
-    });
-  }
-
-  @override
-  initState() {
-    super.initState();
-    // create our timer to generate test values
-    _timer = Timer.periodic(Duration(milliseconds: 30000), _generateTrace);
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
+  //   databaseRefencesSoilTemp.once().then((snapshot) {
+  //     Map<dynamic, dynamic> values = snapshot.value;
+  //     values.forEach((key, values) {
+  //       print(values);
+  //       soilTemperature.add(values.toDouble());
+  //       // omitting "[keys]" from the OPs approach
+  //     });
+  //   });
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // Create A Scope Display for Sine
-    Oscilloscope tempScope = Oscilloscope(
-      showYAxis: false,
-      yAxisColor: Colors.orange,
-      padding: 20.0,
-      backgroundColor: Colors.grey[300],
-      traceColor: Colors.blueAccent,
-      yAxisMax: 60,
-      yAxisMin: 30,
-      dataSet: tempList,
-    );
+    final prov = Provider.of<GraphMode>(context);
+    prov.showTemperature();
+    // prov.showTemperature();
+    return Column(
+      children: [
+        // StaggeredGridView.count(
+        //   crossAxisCount: 4,
+        //   crossAxisSpacing: 12.0,
+        //   mainAxisSpacing: 12.0,
+        //   children: [Padding(padding: EdgeInsets.all(8.0))],
+        //   staggeredTiles: [StaggeredTile.extent(4, 250.0)],
+        // ),
+        Container(child: Text("Ch here")),
+        // RaisedButton(onPressed: () {
+        // print("Entered 85");
+        // prov.showTemperature();
+        // }),
+        prov.humidity.isEmpty
+            ? Text("get fetch")
+            : Card(
+                elevation: 20,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Sparkline(
+                    data: prov.humidity.sublist(
+                        prov.humidity.length - 20, prov.humidity.length),
+                    lineColor: Colors.redAccent,
+                    fillColor: Colors.lightGreen[200],
+                    pointsMode: PointsMode.all,
+                    // pointSize: 8.0,
+                  ),
+                ),
+              ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
+            elevation: 20,
+            child: Sparkline(
+              data: prov.temperature.sublist(
+                  prov.temperature.length - 20, prov.temperature.length),
+              lineColor: Colors.yellow,
+              fillColor: Colors.lightGreen[200],
+              pointsMode: PointsMode.all,
+              // pointSize: 8.0,
+            ),
+          ),
+        ),
 
-    Oscilloscope soilTempScope = Oscilloscope(
-      showYAxis: false,
-      yAxisColor: Colors.orange,
-      padding: 20.0,
-      backgroundColor: Colors.grey[300],
-      traceColor: Colors.blueAccent,
-      yAxisMax: 60,
-      yAxisMin: 30,
-      dataSet: soilTempList,
-    );
-
-    Oscilloscope humidityScope = Oscilloscope(
-      showYAxis: false,
-      yAxisColor: Colors.orange,
-      padding: 20.0,
-      backgroundColor: Colors.grey[300],
-      traceColor: Colors.blueAccent,
-      yAxisMax: 60,
-      yAxisMin: 30,
-      dataSet: humidityList,
-    );
-
-    // Generate the Scaffold
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("OscilloScope Demo"),
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(flex: 1, child: humidityScope),
-          Expanded(flex: 1, child: tempScope),
-          Expanded(flex: 1, child: soilTempScope),
-        ],
-      ),
+        Card(
+          elevation: 20,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Sparkline(
+              data: prov.temperature.sublist(prov.soilTemperature.length - 20,
+                  prov.soilTemperature.length),
+              lineColor: Colors.blueAccent,
+              fillColor: Colors.blueAccent,
+              pointsMode: PointsMode.all,
+              // pointSize: 8.0,
+            ),
+          ),
+        )
+      ],
     );
   }
 }

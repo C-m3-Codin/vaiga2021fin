@@ -8,6 +8,8 @@ import 'package:vaiga_farmcare/models/graphModel.dart';
 import 'package:vaiga_farmcare/provider/provider.dart';
 import 'package:vaiga_farmcare/screens/Graph.dart';
 import 'package:vaiga_farmcare/screens/LatestNodes.dart';
+import 'package:vaiga_farmcare/screens/cropdata.dart';
+import 'package:vaiga_farmcare/tflite/disease_detect.dart';
 
 import 'NodesBar.dart';
 
@@ -17,7 +19,7 @@ class TabBarDemo extends StatelessWidget {
     final prov = Provider.of<UserProvider>(context);
     return MaterialApp(
       home: DefaultTabController(
-        length: 3,
+        length: 5,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(
@@ -25,6 +27,10 @@ class TabBarDemo extends StatelessWidget {
                 Tab(icon: Icon(Icons.arrow_left_sharp)),
                 Tab(icon: Icon(Icons.sanitizer)),
                 Tab(icon: Icon(Icons.graphic_eq)),
+                Tab(
+                  icon: Icon(Icons.camera),
+                ),
+                Tab(icon: Icon(Icons.soap_outlined)),
               ],
             ),
             title: Text('FarmCare'),
@@ -35,14 +41,15 @@ class TabBarDemo extends StatelessWidget {
               NodeCollectionPage(),
               // Icon(Icons.directions_bike),
               ChangeNotifierProvider(
-                  create: (context) => GraphMode(), child: GraphData())
+                  create: (context) => GraphMode(), child: GraphData()),
+              DiseaseDetection(), CropData(),
             ],
           ),
           floatingActionButton: FloatingActionButton(
               onPressed: () {
                 prov.readDate();
               },
-              child: Icon(Icons.add)),
+              child: Icon(Icons.read_more)),
         ),
       ),
     );
@@ -78,6 +85,7 @@ class _HomePageState extends State<HomePage> {
             var _dht = DHT.fromJson(snapshot.data.snapshot.value['Node1']);
             print("DHT: ${_dht.solidTEmp} / ${_dht.humidity} / ${_dht.temp}");
             return Container(
+                // color: Colors.blue,
                 child: Align(
                     alignment: Alignment.center,
                     child: Column(
@@ -122,44 +130,120 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                         Container(
+                          height: 72,
                           color: Colors.blue,
-                          // height: 30,
                           child: _dht.humidity == -1
-                              ? Text("temperature", textAlign: TextAlign.center)
-                              : Card(
-                                  child: Text(
-                                      "Soil Temperature is ${_dht.solidTEmp}",
-                                      textAlign: TextAlign.center)),
+                              ? Text("Not fetched")
+                              : Center(
+                                  child: Card(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      "Soil Temperature : ${_dht.solidTEmp}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  )),
+                                ),
                         ),
+                        // Container(
+                        //   color: Colors.blue,
+                        //   // height: 30,
+                        //   child: _dht.humidity == -1
+                        //       ? Text("temperature", textAlign: TextAlign.center)
+                        //       : Card(
+                        //           child: Text(
+                        //               "Soil Temperature is ${_dht.solidTEmp}",
+                        //               textAlign: TextAlign.center)),
+                        // ),
                         // Text("Humidity"),
                         Container(
+                          height: 72,
                           color: Colors.blue,
-                          // height: 30,
                           child: _dht.humidity == -1
-                              ? Text("Not Fetched", textAlign: TextAlign.center)
-                              : Card(
-                                  child: Text("Humidity is ${_dht.humidity}",
-                                      textAlign: TextAlign.center)),
+                              ? Text("Not fetched")
+                              : Center(
+                                  child: Card(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      " Humidity : ${_dht.humidity}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  )),
+                                ),
                         ),
+                        // Container(
+                        //   color: Colors.blue,
+                        //   // height: 30,
+                        //   child: _dht.humidity == -1
+                        //       ? Text("Not Fetched", textAlign: TextAlign.center)
+                        //       : Card(
+                        //           child: Text("Humidity is ${_dht.humidity}",
+                        //               textAlign: TextAlign.center)),
+                        // ),
                         // RecomendsPlants(),
                         // FeaturedPlants(),
                         // Text("Dew Point"),
                         Container(
+                          height: 72,
                           color: Colors.blue,
                           child: _dht.humidity == -1
                               ? Text("Not fetched")
-                              : Card(
-                                  child: Text(" Temperature is ${_dht.temp}",
-                                      textAlign: TextAlign.center)),
+                              : Center(
+                                  child: Card(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      " Temperature : ${_dht.temp}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  )),
+                                ),
                         ),
-
                         Container(
+                          height: 72,
                           color: Colors.blue,
                           child: _dht.humidity == -1
                               ? Text("Not fetched")
-                              : Card(
-                                  child: Text("Soil moist is ${_dht.solidTEmp}",
-                                      textAlign: TextAlign.center)),
+                              : Center(
+                                  child: Card(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      "Soil Temperature : ${_dht.solidTEmp}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  )),
+                                ),
+                        ),
+                        // Container(
+                        //   color: Colors.blue,
+                        //   child: _dht.humidity == -1
+                        //       ? Text("Not fetched")
+                        //       : Card(
+                        //           child: Text("Soil moist is ${_dht.solidTEmp}",
+                        //               textAlign: TextAlign.center)),
+                        // ),
+                        Container(
+                          height: 72,
+                          color: Colors.blue,
+                          child: _dht.humidity == -1
+                              ? Text("Not fetched")
+                              : Center(
+                                  child: Card(
+                                      child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      "Soil moist : ${_dht.solidTEmp}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                  )),
+                                ),
                         ),
                         Container(
                           color: Colors.blue,

@@ -67,15 +67,15 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Tensorflow Lite",
-          style: TextStyle(color: Colors.white, fontSize: 25),
-        ),
-        backgroundColor: Colors.amber,
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: Text(
+      //     "Tensorflow Lite",
+      //     style: TextStyle(color: Colors.white, fontSize: 25),
+      //   ),
+      //   backgroundColor: Colors.amber,
+      //   elevation: 0,
+      // ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -96,9 +96,12 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
                         children: <Widget>[
                           _image == null
                               ? Container()
-                              : Image.file(
-                                  _image,
-                                  // scale: 3,
+                              : Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.6,
+                                  child: Image.file(
+                                    _image,
+                                  ),
                                 ),
                           SizedBox(
                             height: 20,

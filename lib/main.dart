@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vaiga_farmcare/provider/provider.dart';
-<<<<<<< HEAD
 import 'package:vaiga_farmcare/screens/graph.dart';
-=======
 import 'package:vaiga_farmcare/screens/homescreen.dart';
->>>>>>> c7a5e61319cd1f618d16f6a9fd9055a923acdcfa
 import 'package:vaiga_farmcare/screens/realtime.dart';
 import 'package:vaiga_farmcare/screens/splashscreen.dart';
 import 'package:vaiga_farmcare/tflite/disease_detect.dart';
@@ -35,12 +32,9 @@ class MyApp extends StatelessWidget {
             'home': (context) => HomePage(),
             'realTime': (context) => RealTime(),
             "tab": (context) => TabBarDemo(),
-<<<<<<< HEAD
             'diseaseDetect': (context) => DiseaseDetection(),
-            'shell': (context) => Shell()
-=======
+            // 'shell': (context) => Shell(),
             "stream": (context) => StreamReal(),
->>>>>>> c7a5e61319cd1f618d16f6a9fd9055a923acdcfa
           },
         ));
   }
